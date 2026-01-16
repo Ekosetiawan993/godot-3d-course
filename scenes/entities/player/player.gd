@@ -33,8 +33,14 @@ func move_logic(delta: float) -> void:
 	if movement_input != Vector2.ZERO:
 		vel_2d += movement_input * speed * delta
 		vel_2d = vel_2d.limit_length(speed)
+		#$GodetteSkin/AnimationPlayer.current_animation = "Running_B"
+		$GodetteSkin.set_move_state("Running_B")
+		var target_angle := -movement_input.angle() + PI/2
+		$GodetteSkin.rotation.y = rotate_toward($GodetteSkin.rotation.y, target_angle, delta * 6.0)
 	else:
 		vel_2d = vel_2d.move_toward(Vector2.ZERO, speed * 4.0 * delta)
+		#$GodetteSkin/AnimationPlayer.current_animation = "Idle"
+		$GodetteSkin.set_move_state("Idle")
 	velocity.x = vel_2d.x
 	velocity.z = vel_2d.y
 	#print(speed)
@@ -45,3 +51,5 @@ func jump_logic(delta: float) -> void:
 			velocity.y = -jump_velocity
 	var gravity := jump_gravity if velocity.y > 0.0 else fall_gravity
 	velocity.y -= gravity * delta
+
+# 2:00:00
