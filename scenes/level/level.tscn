@@ -1,0 +1,56 @@
+[gd_scene load_steps=7 format=3 uid="uid://3mrteyfqgoqi"]
+
+[ext_resource type="PackedScene" uid="uid://dl8ch0ywied8j" path="res://scenes/entities/player/player.tscn" id="1_h3e3j"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_nbgty"]
+sky_top_color = Color(0.33752275, 0.43677112, 0.69675285, 1)
+sky_horizon_color = Color(0.64052415, 0.65758634, 0.7135817, 1)
+ground_horizon_color = Color(0.64052415, 0.65758634, 0.7135817, 1)
+
+[sub_resource type="Sky" id="Sky_i166f"]
+sky_material = SubResource("ProceduralSkyMaterial_nbgty")
+
+[sub_resource type="Environment" id="Environment_qkmgm"]
+background_mode = 2
+sky = SubResource("Sky_i166f")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_h3e3j"]
+size = Vector3(50, 0.5, 50)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nbgty"]
+size = Vector3(10, 10, 1)
+
+[node name="Level" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_qkmgm")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Entities" type="Node3D" parent="."]
+
+[node name="Player" parent="Entities" instance=ExtResource("1_h3e3j")]
+
+[node name="Environment" type="Node3D" parent="."]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Environment/StaticBody3D"]
+size = Vector3(50, 0.5, 50)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/StaticBody3D"]
+shape = SubResource("BoxShape3D_h3e3j")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -7)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Environment/StaticBody3D2"]
+size = Vector3(10, 10, 1)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/StaticBody3D2"]
+shape = SubResource("BoxShape3D_nbgty")
