@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://b402kqeflvjxl"]
+
+[ext_resource type="PackedScene" uid="uid://cqxi7o0pyi1mt" path="res://graphics/weapons/bone.gltf.glb" id="1_6h6ga"]
+[ext_resource type="Script" uid="uid://oufp7e678ll" path="res://scenes/weapons/warrior_sword.gd" id="1_wcncf"]
+
+[node name="WarriorSword" type="Node3D"]
+script = ExtResource("1_wcncf")
+
+[node name="bone_gltf" parent="." instance=ExtResource("1_6h6ga")]
+transform = Transform3D(1.098, 0, 0, 0, 1.177, 0, 0, 0, 1, 0, 0.1, 0)
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0)
+target_position = Vector3(0, 1, 0)
+collision_mask = 2
+
+[editable path="bone_gltf"]
