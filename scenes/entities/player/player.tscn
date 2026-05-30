@@ -19,7 +19,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_yel1f")
 
 [node name="CameraController" parent="." instance=ExtResource("2_635qg")]
-transform = Transform3D(1, 0, 0, 0, 0.90630776, 0.42261827, 0, -0.42261827, 0.90630776, 0, 1.4, 0)
+transform = Transform3D(-1, 3.694646e-08, -7.923193e-08, 0, 0.9063077, 0.42261824, 8.742278e-08, 0.42261824, -0.9063077, 0, 1.4, 0)
 
 [node name="InvulTimer" type="Timer" parent="."]
 wait_time = 0.8

@@ -1,6 +1,11 @@
+class_name Level
 extends Node3D
 
 var fireball_scene: PackedScene = preload("res://scenes/vfx/fireball.tscn")
+const scenes = {
+	"dungeon": "res://scenes/level/dungeon.tscn",
+	"overworld": "res://scenes/level/overworld.tscn",
+}
 
 func _ready() -> void:
 	for entity in $Entities.get_children():
@@ -24,3 +29,9 @@ func instantiate_fireball(_type: String, pos: Vector3, direction: Vector2, size:
 	fireball.global_position = pos
 	fireball.direction = direction
 	fireball.setup(size)
+
+func switch_level(target: String) -> void:
+	call_deferred("_switch_level", target)
+
+func _switch_level(target: String) -> void:
+	get_tree().change_scene_to_file(scenes[target])

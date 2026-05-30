@@ -8,8 +8,8 @@ extends CharacterBody3D
 @onready var jump_gravity : float = ((-2.0 * jump_height) / (jump_time_to_peak * jump_time_to_peak)) * -1.0
 @onready var fall_gravity : float = ((-2.0 * jump_height) / (jump_time_to_descent * jump_time_to_descent)) * -1.0
 
-@export var base_speed := 4.0
-@export var run_speed := 8.0
+@export var base_speed := 8.0
+@export var run_speed := 15.0
 @export var defend_speed := 2.0
 var speed := base_speed
 var speed_modifier := 1.0
@@ -75,6 +75,7 @@ func _physics_process(delta: float) -> void:
 	#if Input.is_action_just_pressed("ui_accept"):
 		#hit()
 	move_and_slide()
+	physics_logic()
 
 func move_logic(delta: float) -> void:
 	movement_input = Input.get_vector("left", "right", "forward", "backward").rotated(-camera.global_rotation.y)
@@ -173,10 +174,18 @@ func _on_energy_recover_timer_timeout() -> void:
 
 
 
-# 7: 05: 00
-# 6: 21: 00
+# 8: 45: 00
+# 7: 42: 00
 
 
 func _on_stamina_recover_timer_timeout() -> void:
 	if stamina < 100:
 		stamina += 1
+
+
+func physics_logic() -> void:
+	# movinf rigid body object
+	for i in get_slide_collision_count():
+		var collider = get_slide_collision(i).get_collider()
+		if collider is RigidBody3D:
+			collider.apply_central_impulse(-get_slide_collision(i).get_normal())

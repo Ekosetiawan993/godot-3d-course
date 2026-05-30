@@ -2,7 +2,7 @@ extends Area3D
 
 
 var direction: Vector2
-const speed = 5.0
+const speed = 15.0
 
 func _ready() -> void:
 	scale = Vector3(0.1, 0.1, 0.1)

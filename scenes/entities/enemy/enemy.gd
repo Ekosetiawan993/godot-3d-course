@@ -43,6 +43,11 @@ func move_toward_player(delta) -> void:
 		else:
 			velocity = Vector3.ZERO
 			move_state_machine.travel("idle")
+		
+		if not is_on_floor():
+			velocity.y -= 10
+		else:
+			velocity.y = 0
 		move_and_slide()
 	
 func stop_movement(start_duration: float, end_duration: float) -> void:
