@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://dl8ch0ywied8j"]
+[gd_scene load_steps=9 format=3 uid="uid://dl8ch0ywied8j"]
 
 [ext_resource type="Script" uid="uid://bdp2i6i2oue7s" path="res://scenes/entities/player/player.gd" id="1_1hmtu"]
 [ext_resource type="PackedScene" uid="uid://c3iyobobkeik5" path="res://scenes/entities/player/godette_skin.tscn" id="2_58kc7"]
@@ -6,6 +6,20 @@
 [ext_resource type="PackedScene" uid="uid://cr8mc5nconoiw" path="res://scenes/entities/player/ui.tscn" id="4_nh4ur"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_yel1f"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_nh4ur"]
+emission_shape = 1
+emission_sphere_radius = 0.6
+gravity = Vector3(0, 1, 0)
+scale_min = 0.099999994
+scale_max = 0.29999998
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bjvvg"]
+albedo_color = Color(0.69803923, 0.69803923, 0.69803923, 1)
+metallic_specular = 0.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_8akj5"]
+material = SubResource("StandardMaterial3D_bjvvg")
 
 [node name="Player" type="CharacterBody3D" groups=["Player"]]
 collision_layer = 2
@@ -34,6 +48,14 @@ autostart = true
 [node name="StaminaRecoverTimer" type="Timer" parent="."]
 wait_time = 0.4
 autostart = true
+
+[node name="RunParticles" type="GPUParticles3D" parent="."]
+transparency = 0.25
+cast_shadow = 0
+emitting = false
+amount = 10
+process_material = SubResource("ParticleProcessMaterial_nh4ur")
+draw_pass_1 = SubResource("SphereMesh_8akj5")
 
 [connection signal="timeout" from="EnergyRecoverTimer" to="." method="_on_energy_recover_timer_timeout"]
 [connection signal="timeout" from="StaminaRecoverTimer" to="." method="_on_stamina_recover_timer_timeout"]

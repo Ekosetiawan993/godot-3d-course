@@ -8,15 +8,17 @@ extends CharacterBody3D
 @onready var jump_gravity : float = ((-2.0 * jump_height) / (jump_time_to_peak * jump_time_to_peak)) * -1.0
 @onready var fall_gravity : float = ((-2.0 * jump_height) / (jump_time_to_descent * jump_time_to_descent)) * -1.0
 
-@export var base_speed := 8.0
-@export var run_speed := 15.0
+@export var base_speed := 5.0
+@export var run_speed := 8.0
 @export var defend_speed := 2.0
 var speed := base_speed
 var speed_modifier := 1.0
+var is_running: bool = false
 
 @onready var camera = $CameraController/Camera3D
 @onready var godette_skin: Node3D = $GodetteSkin
 @onready var ui = $UI
+@onready var run_particles: GPUParticles3D = $RunParticles
 
 
 var movement_input := Vector2.ZERO
@@ -66,6 +68,8 @@ func _ready() -> void:
 	ui.setup(health)
 
 func _physics_process(delta: float) -> void:
+	# 9: 42
+	RenderingServer.global_shader_parameter_set("player_position", global_position)
 	#movement_input = Input.get_vector("left", "right", "forward", "backward").rotated(-camera.global_rotation.y)
 	
 	#velocity = Vector3(movement_input.x, 0, movement_input.y) * base_speed
@@ -82,8 +86,10 @@ func move_logic(delta: float) -> void:
 	var vel_2d := Vector2(velocity.x, velocity.z) # just move without y
 	if Input.is_action_pressed("run"):
 		speed = run_speed
+		is_running = true
 	else:
 		speed = base_speed
+		is_running = false
 	if is_defend:
 		speed = defend_speed
 
@@ -108,6 +114,8 @@ func move_logic(delta: float) -> void:
 	#print(speed)
 	if movement_input:
 		last_movement_input = movement_input.normalized()
+	
+	run_particles.emitting = is_on_floor() and is_running and movement_input != Vector2.ZERO
 
 func jump_logic(delta: float) -> void:
 	if is_on_floor():
@@ -174,7 +182,10 @@ func _on_energy_recover_timer_timeout() -> void:
 
 
 
-# 8: 45: 00
+# 9: 03: 00 , visual shader not having albedo, change to fragment, water shader
+# 9: 27: 30 , grass shader
+# 9: 33: 10, grass fragment shader
+# 9: 47: 00, one blade of grass
 # 7: 42: 00
 
 

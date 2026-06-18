@@ -31,6 +31,8 @@
 [ext_resource type="PackedScene" uid="uid://cnx8e4v6j3cwv" path="res://graphics/environment/objects/tree4.glb" id="26_3tf0k"]
 [ext_resource type="PackedScene" uid="uid://bxrow4str1vfs" path="res://scenes/level/bridge_collided.tscn" id="26_142hh"]
 [ext_resource type="PackedScene" uid="uid://dwjrrhoj6ltyx" path="res://graphics/environment/castle.blend" id="27_2ohmw"]
+[ext_resource type="PackedScene" uid="uid://lkvq87haaopg" path="res://scenes/vfx/water.tscn" id="32_oan6f"]
+[ext_resource type="PackedScene" uid="uid://rmwokk2qcaop" path="res://scenes/vfx/grass_blade.tscn" id="33_nprf2"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_2ohmw"]
 sky_top_color = Color(0.33752275, 0.43677112, 0.69675285, 1)
@@ -74,13 +76,6 @@ _data = {
 }
 point_count = 11
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ptav6"]
-albedo_color = Color(0.09019608, 0.5176471, 1, 1)
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_lbork"]
-material = SubResource("StandardMaterial3D_ptav6")
-size = Vector2(600, 300)
-
 [sub_resource type="BoxShape3D" id="BoxShape3D_cvt0k"]
 size = Vector3(3.1000001, 3.7, 3.2)
 
@@ -99,14 +94,14 @@ shadow_opacity = 0.9
 shadow_blur = 4.5
 
 [node name="Player" parent="Entities" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, -35.41994, 325.80002)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.1, 10.640049, -83.39998)
 
 [node name="Path3D" type="Path3D" parent="Entities" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 29.771614, 28.264503)
 curve = SubResource("Curve3D_2ohmw")
 
 [node name="Bird" parent="Entities/Path3D" index="0" instance=ExtResource("2_cvt0k")]
-transform = Transform3D(0.53585774, -0.01832924, 0.84410673, -0.002691585, 0.9997161, 0.023417069, -0.8443001, -0.014820187, 0.5356603, 11.369541, -9.311176, -60.718178)
+transform = Transform3D(0.53585774, -0.018329183, 0.84410673, -0.002691585, 0.99971294, 0.023417069, -0.8443001, -0.014820141, 0.5356603, 11.369541, -9.311176, -60.718178)
 progress = 5.0
 use_model_front = true
 
@@ -717,11 +712,7 @@ transform = Transform3D(0.25881898, 0, -0.96592593, 0, 1, 0, 0.96592593, 0, 0.25
 [node name="rocks5" parent="Environment/env_object/Rocks" index="17" instance=ExtResource("21_vruj4")]
 transform = Transform3D(-0.70710695, 0, -0.70710677, 0, 1, 0, 0.70710677, 0, -0.70710695, -203, -39.942966, 280)
 
-[node name="Water" type="MeshInstance3D" parent="Environment" index="2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -50, 247)
-mesh = SubResource("PlaneMesh_lbork")
-
-[node name="castle" parent="Environment" index="3" instance=ExtResource("27_2ohmw")]
+[node name="castle" parent="Environment" index="2" instance=ExtResource("27_2ohmw")]
 transform = Transform3D(0.25881907, 0, 0.9659258, 0, 1, 0, -0.9659258, 0, 0.25881907, -5, -39.58334, 360)
 
 [node name="Area3D" type="Area3D" parent="Environment/castle" index="8"]
@@ -733,5 +724,16 @@ collision_mask = 2
 transform = Transform3D(0.9396927, 0, 0.34202015, 0, 1, 0, -0.34202015, 0, 0.9396927, 0.98049927, 0.95000076, -0.16572571)
 shape = SubResource("BoxShape3D_cvt0k")
 debug_color = Color(0.11225689, 0.14790419, 0.13722014, 1)
+
+[node name="Water" parent="Environment" index="3" instance=ExtResource("32_oan6f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.2, -48.800003, 237.30002)
+
+[node name="Grass" type="Node3D" parent="Environment" index="4"]
+
+[node name="GrassBlade" parent="Environment/Grass" index="0" instance=ExtResource("33_nprf2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.400001, 10.99917, -76.8729)
+
+[node name="Camera3D" type="Camera3D" parent="." index="5"]
+transform = Transform3D(1, 0, 0, 0, 0.9396927, 0.34202015, 0, -0.34202015, 0.9396927, 8, 17.341518, -54.374035)
 
 [connection signal="body_entered" from="Environment/castle/Area3D" to="." method="_on_area_3d_body_entered"]
