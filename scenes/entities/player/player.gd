@@ -185,8 +185,8 @@ func _on_energy_recover_timer_timeout() -> void:
 # 9: 03: 00 , visual shader not having albedo, change to fragment, water shader
 # 9: 27: 30 , grass shader
 # 9: 33: 10, grass fragment shader
-# 9: 47: 00, one blade of grass
-# 7: 42: 00
+# 9: 47: 00, one blade of grass, proton scater for a lot of grass
+# 9: 52: 00, last progress
 
 
 func _on_stamina_recover_timer_timeout() -> void:
