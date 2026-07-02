@@ -175,6 +175,7 @@ func shoot_magic(pos: Vector3):
 		cast_spell.emit("fireball", pos, last_movement_input, 1)
 	elif current_spell == spells.HEAL:
 		health += 1
+		godette_skin.heal_tween()
 
 func _on_energy_recover_timer_timeout() -> void:
 	if energy < 100:
@@ -186,7 +187,10 @@ func _on_energy_recover_timer_timeout() -> void:
 # 9: 27: 30 , grass shader
 # 9: 33: 10, grass fragment shader
 # 9: 47: 00, one blade of grass, proton scater for a lot of grass
-# 9: 52: 00, last progress
+# 9: 52: 00, fireball shader
+# 10: 06: 50, player shader, on material overlay
+# 10: 12: 50, control player body shader with code
+# 10: 17: 00, player shader when hit
 
 
 func _on_stamina_recover_timer_timeout() -> void:

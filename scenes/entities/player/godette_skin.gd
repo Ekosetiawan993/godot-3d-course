@@ -74,3 +74,13 @@ func _on_blink_timer_timeout() -> void:
 
 func can_damage(value: bool):
 	$Rig/Skeleton3D/RightHandSlot/Sword.can_damage = value
+
+
+func heal_tween() -> void:
+	var tween = create_tween()
+	tween.tween_method(_heal_effect, 0.0, 0.7, 0.5)
+	tween.tween_method(_heal_effect, 0.7, 0.0, 0.3)
+	
+func _heal_effect(value: float) -> void:
+	$Rig/Skeleton3D/Godette_Body.material_overlay.set_shader_parameter("color", Color.LAWN_GREEN)
+	$Rig/Skeleton3D/Godette_Body.material_overlay.set_shader_parameter("alpha", value)
