@@ -116,6 +116,12 @@ func move_logic(delta: float) -> void:
 		last_movement_input = movement_input.normalized()
 	
 	run_particles.emitting = is_on_floor() and is_running and movement_input != Vector2.ZERO
+	
+	if is_on_floor() and movement_input:
+		if not $Sounds/StepsSound.playing:
+			$Sounds/StepsSound.playing = true
+	else:
+		$Sounds/StepsSound.playing = false
 
 func jump_logic(delta: float) -> void:
 	if is_on_floor():
@@ -132,6 +138,7 @@ func ability_logic() -> void:
 	if Input.is_action_just_pressed("ability"):
 		if weapon_active:
 			godette_skin.attack()
+			$Sounds/SwordSound.play()
 		else:
 			if energy >= 20:
 				godette_skin.cast_spell()
@@ -191,6 +198,7 @@ func _on_energy_recover_timer_timeout() -> void:
 # 10: 06: 50, player shader, on material overlay
 # 10: 12: 50, control player body shader with code
 # 10: 17: 00, player shader when hit
+# 10: 23: 00, sound
 
 
 func _on_stamina_recover_timer_timeout() -> void:

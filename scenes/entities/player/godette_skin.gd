@@ -61,6 +61,14 @@ func hit() -> void:
 	$AnimationTree.set("parameters/ExtraOneShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 	$AnimationTree.set("parameters/AttackOneShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_ABORT)
 	attacking = false
+	var tween = create_tween()
+	tween.tween_method(_hit_effect, 0.0, 0.7, 0.3)
+	tween.tween_method(_hit_effect, 0.7, 0.0, 0.1)
+
+func _hit_effect(value: float) -> void:
+	$Rig/Skeleton3D/Godette_Body.material_overlay.set_shader_parameter("color", Color.ORANGE_RED)
+	$Rig/Skeleton3D/Godette_Body.material_overlay.set_shader_parameter("alpha", value)
+	
 	
 func change_face(expression: String) -> void:
 	face_material.uv1_offset = faces[expression]

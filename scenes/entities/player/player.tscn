@@ -1,9 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://dl8ch0ywied8j"]
+[gd_scene load_steps=11 format=3 uid="uid://dl8ch0ywied8j"]
 
 [ext_resource type="Script" uid="uid://bdp2i6i2oue7s" path="res://scenes/entities/player/player.gd" id="1_1hmtu"]
 [ext_resource type="PackedScene" uid="uid://c3iyobobkeik5" path="res://scenes/entities/player/godette_skin.tscn" id="2_58kc7"]
 [ext_resource type="PackedScene" uid="uid://b6o3g8hgqr00p" path="res://scenes/entities/player/camera_controller.tscn" id="2_635qg"]
 [ext_resource type="PackedScene" uid="uid://cr8mc5nconoiw" path="res://scenes/entities/player/ui.tscn" id="4_nh4ur"]
+[ext_resource type="AudioStream" uid="uid://brog30lvnpr6b" path="res://audio/sword sound.wav" id="5_8akj5"]
+[ext_resource type="AudioStream" uid="uid://q016xqptbrb" path="res://audio/steps.mp3" id="6_bj7e2"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_yel1f"]
 
@@ -56,6 +58,16 @@ emitting = false
 amount = 10
 process_material = SubResource("ParticleProcessMaterial_nh4ur")
 draw_pass_1 = SubResource("SphereMesh_8akj5")
+
+[node name="Sounds" type="Node3D" parent="."]
+
+[node name="SwordSound" type="AudioStreamPlayer3D" parent="Sounds"]
+stream = ExtResource("5_8akj5")
+volume_db = -10.0
+
+[node name="StepsSound" type="AudioStreamPlayer3D" parent="Sounds"]
+stream = ExtResource("6_bj7e2")
+volume_db = -20.0
 
 [connection signal="timeout" from="EnergyRecoverTimer" to="." method="_on_energy_recover_timer_timeout"]
 [connection signal="timeout" from="StaminaRecoverTimer" to="." method="_on_stamina_recover_timer_timeout"]

@@ -80,6 +80,15 @@ func hit() -> void:
 		print("bos hit")
 		$Timers/InvulTimer.start()
 		health -= 1
+		var tween = create_tween()
+		tween.tween_method(_hit_effect, 0.0, 0.7, 0.3)
+		tween.tween_method(_hit_effect, 0.7, 0.0, 0.1)
+
+func _hit_effect(value: float) -> void:
+	# we can create new geometry material overlay with existing shader
+	# or copy the whole goddete material overlay
+	#$skin/Rig/Skeleton3D/Nagonford_Body.material_overlay.set_shader_parameter("color", Color.ORANGE_RED)
+	$skin/Rig/Skeleton3D/Nagonford_Body.material_overlay.set_shader_parameter("alpha", value)
 
 func attack_logic() -> void:
 	if can_damage:
